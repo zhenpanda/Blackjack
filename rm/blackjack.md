@@ -1,4 +1,4 @@
-# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Project #1: The Game
+<!-- # ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Project #1: The Game
 
 ## Overview of `blackjack.js`
 
@@ -103,4 +103,13 @@ Most importantly a **technical demonstration** of your app which:
 * Shows off all features of the app
 * Explains the technical details
 * Explains the technical challenges
-* Explains which improvements you might make
+* Explains which improvements you might make -->
+
+<!-- Notes -->
+
+<!-- 
+	
+	Max player 6 in game of blackjack including the dealer
+	so 5 player max in a game of blackjack
+	
+ -->
