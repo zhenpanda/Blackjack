@@ -14,13 +14,13 @@ var blackjack = {
 	shoe: 0,
 	playerCount: 0,
 	playerStartMoney: 0,
-	//current player index, moves up as player pass prority
+	//current player index, moves up as player pass prority, 2 prority to pass
 	prorityHolder: 0,
 	// users hits start button: prompts user inputs, create player, dealer, deck
 	makeGame: function (startGameButton) {
 		// phase 0: setup this.makeGame, create player, dealer, deck, can hit start playing
-		this.shoe = prompt("How many decks would you like to play with?\n \nIncreasing the number of decks may give the house an advantage.", "4");
-		this.playerCount = prompt("How players do we have today?\n \nSupports (1-4) players.", "1");
+		this.shoe = prompt("How many decks would you like to play with?\n \nIncreasing the number of decks may give the house an advantage.", "1");
+		this.playerCount = prompt("How players do we have today?\n \nSupports (1-5) players.", "1");
 		this.playerStartMoney = prompt("How much money does each player have to start?", "100");
 		this.currentDeck = new Deck();
 		// create a deck from user's input num, shuffle it
@@ -37,11 +37,8 @@ var blackjack = {
 		console.log(this.dealer);
 	},
 	readyCheck: function (readyButton) {
-		// phase 1: upkeep. each player bets, hits ready, waits for game to start
-		// eventListener for ready button and once everyone is ready start the game
-
+		// phase 1: upkeep. each player bets, hits ready button, waits for game to start
 		console.log("all players have entered desired bets and ready to play.\n \nLet's get it on!");
-
 	},
 	startGame: function () {
 		//check if the deck has at least 10 cards left
@@ -58,72 +55,75 @@ var blackjack = {
 			};
 			console.log(this.currentDeck.count());
 			// phase 2: init game, deals starting hand for each player/dealer, check for insurance, hit dealer
-		
+			console.log("If there are insurances, do this step.")
 			// check priority run once wait for player to decide what to do next when they click button
 			this.priorityCheck();
 		}else{
 			alert("Not enough cards in the deck to play a game.")
 		};
 	},
+	//priorityCheck keeps the flow of the game and keep track of each players turn
 	priorityCheck: function () {
 		// check default priority, while current player has priority give that player button controls
 		if (this.prorityHolder < this.playerCount) {
-			// priority is to give control of buttons to target player, show button via CSS design, button function connection
-			//change how event listener work 
+			// priority is to give control of buttons to target player, show button via CSS design
 			console.log("This is currently player (" + (this.prorityHolder + 1) + ")'s turn.")
 			// check cards in player hands use CSS style to show player their options
-			console.log("Display the the style and click-ables " + (this.prorityHolder + 1) + " connect the buttons so they do something.")
+			console.log("Display the the style GUI for player " + (this.prorityHolder + 1));
+		}else if (this.prorityHolder == this.playerCount) {
+			console.log("All players are done with their actions, dealer's show now.");
+			this.dealerAction();
 		};
 	},
+	// playerActionButton is target of the clicked button, current player is the prorityHolder, button finds the player, game is starting with player 1
 	playerActions: function (playerActionButton) {
-		// phase 3: each player plays, check game conditions for (hit/spilt/doubleDown/surrender), starting from right until each player plays until 21 or bust or stand and pass their turn, prority checks the player.hand & player.spiltHand
-
-		//stand: pass priority
+		// phase 3: each player plays, check game conditions for (hit/spilt/doubleDown/surrender)
 		if (playerActionButton == "stand") {
+			//stand: pass priority, nothing else happens on this turn
 			console.log("player choose to stand!")
 			this.prorityHolder++;
 			this.priorityCheck();
 		}else if (playerActionButton == "hit") {
-		//hit: run hit if it's called, hold prority, else bust & lose
+			//hit: run hit if it's called, hold prority, else bust & lose
 			console.log("player choose to hit!")
+			//currentPlayerHand is indexed by prorityHolder action is done to that player obj
 			this.currentPlayerHand = this.userPlayers[this.prorityHolder].hit(this.currentDeck.library);
+			//if player hit and doesn't bust, they can chose to keep hitting
 			if (this.currentPlayerHand == "BUST") {
 				console.log(this.userPlayers[this.prorityHolder].hand);
+				//priority is passed if the player busts
 				this.prorityHolder++;
 				this.priorityCheck();
 			};
 		}else if (playerActionButton == "double") {
-		//double down: add money & add 1 card pass priority
+			//double down: add money & add 1 card pass priority
 			console.log("player choose to double, add that bet amount")
 			//change the bet amount
 			this.currentPlayerHand = this.userPlayers[this.prorityHolder].hit(this.currentDeck.library);
 			console.log(this.userPlayers[this.prorityHolder].hand);
 			this.prorityHolder++;
 			this.priorityCheck();
+		}else if (playerActionButton == "surrender") {
+			//surrender: get half money back, pass priority & lose
+			console.log("Half of the bet is taken away from target player.")
+			this.prorityHolder++;
+			this.priorityCheck();
 		};
-		
-		//surrender: get half money back, pass priority & lose
-
-		//spilt: put card into spiltHand, with 
-		//spiltAces: 
-
+		//spilt: put card into spiltHand, with double the bet and gets another hand
+		//spiltAces: put each Ace in each hand, but only get one more card on each hand
 	},
 	dealerAction: function () {
 		// phase 4: dealer game, dealer keeps drawing until, table rule of s17 or bust
-		console.log("This is where dealer plays.");
+		console.log("This where dealer plays the game.");
+		this.dealer.softSeventeen(this.currentDeck.library);
+		// phase 5: each player compare against the dealer natural/win/lose/push
+		console.log("This is where everything is checked, dealer compare against each player.");
+		for (var p = 0; p < this.userPlayers.length; p++) {
+			this.userPlayers[p].checkHand();
+			console.log("Player's hand value is " + this.userPlayers[p].handValue);
 
-		// phase 5: highest hand players closest to 21 compare their hand against dealer if dealer didn't bust, pay out to each player, clear dealer hand, clear player hand 
-		console.log("This is where everything is checked, winner is found")
+		};
+		// payout to each player (natural/win/lose/push)
 	}
 };
-
-//testing dangs
-blackjack.makeGame();
-blackjack.readyCheck();
-blackjack.startGame();
-//player actions as follows
-//blackjack.playerActions("stand");
-//blackjack.playerActions("hit");
-blackjack.playerActions("double");
-
-
+/* wishlist: up up down down left right left right ba start (cheat happenes) */
