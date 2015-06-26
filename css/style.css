@@ -1,0 +1,24 @@
+.bg-img{
+    background-image: url('../img/tableTestView.jpg');
+    position: relative;
+    width: 1366px;
+    height: 768px;
+    margin-left: auto;
+    margin-right: auto;
+    background-repeat: no-repeat;   
+}
+.player-slot{
+	width: 250px;
+    height: 268px;
+    background-color: black;
+    margin-right: 20px;
+	float: left;
+	opacity: 0.3;
+}
+.group-slot{
+  	top: 460px;
+	position: absolute;
+	margin-left: 10px;
+}
+
+/*hover effects*/

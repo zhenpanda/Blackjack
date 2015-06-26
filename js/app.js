@@ -5,9 +5,11 @@ var blackjack = {
 	//create dealer
 	dealer: "",
 	dealerHand: "",
+	dealerHandValue: "",
 	//currentPlayer, [userPlayers] is an array with all players
 	currentPlayer: "",
 	currentPlayerHand: "",
+	currentPlayerHandValue: "",
 	userPlayers: [],
 	userPlayersHand: [],
 	//setup some init value, user will input real val from prompt once game starts
@@ -16,6 +18,8 @@ var blackjack = {
 	playerStartMoney: 0,
 	//current player index, moves up as player pass prority, 2 prority to pass
 	prorityHolder: 0,
+	//spilt prority check if current play has pass proripty playing a spilt hand
+	proritySpilt: 0,
 	// users hits start button: prompts user inputs, create player, dealer, deck
 	makeGame: function (startGameButton) {
 		// phase 0: setup this.makeGame, create player, dealer, deck, can hit start playing
@@ -46,14 +50,23 @@ var blackjack = {
 			console.log("Game has started!")
 			//Give 2 cards to dealer 1 faceup 1 facedown
 			this.dealerHand = this.dealer.draw(this.currentDeck.library);
-			console.log(this.dealerHand);
+			//check and show dealer's hand
+			this.dealer.checkHand();
 			//Give 2 card to each player
 			for (var p = 0; p < this.userPlayers.length; p++) {
 				this.currentPlayer = this.userPlayers[p];
 				this.currentPlayerHand = this.currentPlayer.draw(this.currentDeck.library);
-				//console.log(this.currentPlayerHand);
+				// check show player's hand
+				this.currentPlayer.checkHand();
+				// checks for a spilt
+				if (this.currentPlayer.doublesCheck(this.currentPlayerHand) == "DOUBLE") {
+					// theres the double the spilt button should show now 
+					console.log("You got a double! You are able to spilt if you want.")
+				}else if (this.currentPlayer.doublesCheck(this.currentPlayerHand) == "SINGLE") {
+					console.log("No doubles here, go on.")
+				};
 			};
-			console.log(this.currentDeck.count());
+			console.log("There are " + this.currentDeck.count() + " left in the deck.");
 			// phase 2: init game, deals starting hand for each player/dealer, check for insurance, hit dealer
 			console.log("If there are insurances, do this step.")
 			// check priority run once wait for player to decide what to do next when they click button
@@ -89,6 +102,7 @@ var blackjack = {
 			//currentPlayerHand is indexed by prorityHolder action is done to that player obj
 			this.currentPlayerHand = this.userPlayers[this.prorityHolder].hit(this.currentDeck.library);
 			//if player hit and doesn't bust, they can chose to keep hitting
+			console.log(this.userPlayers[this.prorityHolder].hand);
 			if (this.currentPlayerHand == "BUST") {
 				console.log(this.userPlayers[this.prorityHolder].hand);
 				//priority is passed if the player busts
@@ -108,20 +122,46 @@ var blackjack = {
 			console.log("Half of the bet is taken away from target player.")
 			this.prorityHolder++;
 			this.priorityCheck();
+		}else if (playerActionButton == "spilt") {
+			//spilt: put card into spiltHand, with double the bet and gets another hand
+			//spiltAces: put each Ace in each hand, but only get one more card on each hand
+			this.userPlayers[this.prorityHolder].spilt();
+		}else if (playerActionButton == "test") {
+			//used to test the buttons
+			alert("This is a button test!");
 		};
-		//spilt: put card into spiltHand, with double the bet and gets another hand
-		//spiltAces: put each Ace in each hand, but only get one more card on each hand
 	},
 	dealerAction: function () {
 		// phase 4: dealer game, dealer keeps drawing until, table rule of s17 or bust
 		console.log("This where dealer plays the game.");
 		this.dealer.softSeventeen(this.currentDeck.library);
+		this.dealer.checkHand();
+		this.dealerHandValue = this.dealer.handValue;
 		// phase 5: each player compare against the dealer natural/win/lose/push
 		console.log("This is where everything is checked, dealer compare against each player.");
 		for (var p = 0; p < this.userPlayers.length; p++) {
 			this.userPlayers[p].checkHand();
-			console.log("Player's hand value is " + this.userPlayers[p].handValue);
-
+			this.currentPlayerHandValue = this.userPlayers[p].handValue;
+			console.log("Current player hand " + this.currentPlayerHandValue + " vs dealer " + this.dealerHandValue)
+			//compare the current player's hand against the dealer
+			if (this.currentPlayerHandValue == this.dealerHandValue || (this.currentPlayerHandValue > 21 && this.dealerHandValue > 21)) {
+				console.log("Push. It's a tie.")
+			};
+			// check for win no one is bust
+			if (this.currentPlayerHandValue <= 21 && this.dealerHandValue <= 21) {
+				if (this.currentPlayerHandValue > this.dealerHandValue) {
+					console.log("Player wins!");
+				}else if (this.currentPlayerHandValue < this.dealerHandValue) {
+					console.log("Dealer wins!");
+				};
+			// check for non-bust wins
+			}else if (this.currentPlayerHandValue > 21 || this.dealerHandValue > 21) {
+				if (this.currentPlayerHandValue <= 21 && this.dealerHandValue > 21) {
+					console.log("Player wins!");
+				}else if (this.dealerHandValue <= 21 && this.currentPlayerHandValue > 21) {
+					console.log("Dealer wins!");
+				};
+			};
 		};
 		// payout to each player (natural/win/lose/push)
 	}

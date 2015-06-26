@@ -1,23 +1,32 @@
-//One player GUI station
-//CSS & HTML style shows which player's turn it currently is
-//Cards for each player is displayed on table at all times
-
+//window.onload generate buttons 
 $(function() {
     alert( "javascript loaded, start testing!" );
-
-	//testing dangs
+	//starts the game create: deck/players/dealer
 	blackjack.makeGame();
+	//checks for all bets are set to kick off game
 	blackjack.readyCheck();
+	//game starts, begin playing
 	blackjack.startGame();
-
+	
 	//player actions as follows
-	blackjack.playerActions("stand");
+	//blackjack.playerActions("stand");
 	//blackjack.playerActions("hit");
 	//blackjack.playerActions("double");
 	//blackjack.playerActions("surrender");
+	//blackjack.playerActions("spilt");
+	//blackjack.playerActions("test");
+ 
+	//depending on number of players creates the player slot accordingly
+	if (blackjack.userPlayers.length > 1) {	
+		$("#slotA").click(function(){ blackjack.playerActions("test"); });
+	};
 });
 
 
+
+// hitButton.addEventListener("click", function() {
+// 	blackjack.playerActions("hit");
+// })
 
 
 

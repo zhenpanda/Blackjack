@@ -47,6 +47,7 @@ var Deck = function () {
 var Player = function (startingMoney) {
 	this.bankroll = startingMoney;
 	this.hand = [];
+	this.startingHand = []
 	this.handValue = 0;
 	this.spiltHand = [];
 	this.spiltHandValue = 0;
@@ -54,14 +55,9 @@ var Player = function (startingMoney) {
 	this.isReady = false;
 	this.playerDrawDeck = "";
 	this.aceIndex = 0;
-	this.aceCount;
 	this.bet = function () {
 		// puts money from bankroll on onTableBet, use button to increase decrease bet
 		// once the bet button is hit player is now ready to start
-	};
-	this.ready = function () {
-		// hits a button to flag that player is ready, change color CSS to show ready
-		this.isReady = true;
 	};
 	this.insurance = function () {
 		// check if has extra money, add to insurance, side bet
@@ -72,6 +68,8 @@ var Player = function (startingMoney) {
 		this.playerDrawDeck = drawDeck;
 		this.hand.push(this.playerDrawDeck.pop(), this.playerDrawDeck.pop());
 		return (this.hand);
+		// check for spilt-able hand
+		
 	};
 	this.checkHand = function () {
 		// checks current hand's value returns int to hand handValue
@@ -84,37 +82,44 @@ var Player = function (startingMoney) {
 			};
 		};
 		// if there is a "bust"ed hand and there's an Ace, address the Ace value
-		if ((this.handValue > 21) && (this.aceCount > 0)) {
+		if ((this.handValue > 21) && (this.aceIndex > 0)) {
 			// change the Ace to a 1 both in num and value
 			//debugger;
 			this.hand[this.aceIndex].num = "1";
 			this.hand[this.aceIndex].cardValue = 1;
-			// clear Ace count
-			this.aceCount = 0;
-			this.handValue = 0;
-			this.handValue = this.handValue + this.hand[c].cardValue;
+			//decrease the value of Ace to 1
+			this.handValue = this.handValue - 10;
 			console.log("Ace was changed.")
 		};
-		console.log("Dealer's hand value is "+ this.handValue);
+		console.log("Player's hand value is "+ this.handValue);
 		console.log(this.hand);
 	};
 	this.hit = function (drawDeck) {
 		// draw cards from the [deck] obj, check for bust lose
 		this.playerDrawDeck = drawDeck;
 		this.hand.push(this.playerDrawDeck.pop())
-		for (var c = 0; c < this.hand.length; c++) {
-			this.handValue = this.hand[c].cardValue + this.handValue;
-		};
+		this.checkHand();
 		if (this.handValue <= 21) {
-			console.log("under 21 still in it.")
+			console.log(this.handValue + " still in it.")
 			return ("SAFE");
-		}else{
+		}else if (this.handValue > 21) {};{
 			console.log("over 21 bust!")
 			return ("BUST");
 		};
 	};
+	this.doublesCheck = function (handCheck) {
+		// checks if player's hand have doubles of of same card
+		this.startingHand = handCheck;
+		if (this.startingHand[0].num == this.startingHand[1].num) {
+			return ("DOUBLE")
+		}else{
+			return ("SINGLE")
+		};
+	};
 	this.spilt = function () {
 		// spilt hands into spilt hand
+		console.log("Hand has spilt into spiltHand.");
+
 	};
 	this.payout = function () {
 		// win/lose/push changes the player's bankroll
@@ -127,7 +132,6 @@ var Dealer = function () {
 	this.facedownDraw = "";
 	this.hand = [];
 	this.handValue = 0;
-	this.aceCount = [];
 	this.aceIndex = 0;
 	this.draw = function (drawDeck) {
 		// draw a card from deck, one faceup, one facedown, added to hand
@@ -148,15 +152,13 @@ var Dealer = function () {
 			};
 		};
 		// if there is a "bust"ed hand and there's an Ace, address the Ace value
-		if ((this.handValue > 21) && (this.aceCount > 0)) {
+		if ((this.handValue > 21) && (this.aceIndex > 0)) {
 			// change the Ace to a 1 both in num and value
 			//debugger;
 			this.hand[this.aceIndex].num = "1";
 			this.hand[this.aceIndex].cardValue = 1;
-			// clear Ace count
-			this.aceCount = 0;
-			this.handValue = 0;
-			this.handValue = this.handValue + this.hand[c].cardValue;
+			//decrease the value of Ace to 1
+			this.handValue = this.handValue - 10;
 			console.log("Ace was changed.")
 		};
 		console.log("Dealer's hand value is "+ this.handValue);
@@ -169,6 +171,7 @@ var Dealer = function () {
 		// check if you got more than 17
 		this.checkHand();
 		while (this.handValue < 17) {
+			console.log("Dealer's drawing a card.")
 			this.currentDraw = this.dealerDrawDeck.pop();
 			//draw a card
 			this.hand.push(this.currentDraw);
