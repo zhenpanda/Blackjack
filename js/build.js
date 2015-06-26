@@ -4,6 +4,7 @@ var Card = function (assignNum, assignSuit, assignValue) {
 	this.suit = assignSuit;
 	this.cardValue = assignValue;
 	this.visible = true;
+	this.image = "url";
 	this.hide = function () {this.hidden = false};
 	this.show = function () {this.hidden = true};
 };
@@ -15,22 +16,30 @@ var Deck = function () {
 	//creates a single deck add it to library
 	this.createDeck = function (numOfDecks) {
 		this.numOfDeckToCreate = numOfDecks;
-		for (var d = 0; d < parseInt(this.numOfDeckToCreate); d++) {
-			//create num of deck equal to numOfDecks to make library of mulitple decks
-			for (var s=0; s<this.suits.length; s++) {
-				for (var n=0; n<this.nums.length; n++) {
-					if (this.nums[n] == "A") {
-						//Ace is 11 until it's changed to 1
-						var cardIntValue = 11; 
-					}else if (this.nums[n] == "J" || this.nums[n] == "Q" || this.nums[n] == "K") {
-						var cardIntValue = 10;
-					}else{
-						var cardIntValue = parseInt(this.nums[n]);
-					}
-					//create card objs put them in library
-					this.library.push(new Card( this.nums[n], this.suits[s], cardIntValue));
-				};
-			};		
+		if (this.numOfDeckToCreate != 0) {
+			for (var d = 0; d < parseInt(this.numOfDeckToCreate); d++) {
+				//create num of deck equal to numOfDecks to make library of mulitple decks
+				for (var s=0; s<this.suits.length; s++) {
+					for (var n=0; n<this.nums.length; n++) {
+						if (this.nums[n] == "A") {
+							//Ace is 11 until it's changed to 1
+							var cardIntValue = 11; 
+						}else if (this.nums[n] == "J" || this.nums[n] == "Q" || this.nums[n] == "K") {
+							var cardIntValue = 10;
+						}else{
+							var cardIntValue = parseInt(this.nums[n]);
+						}
+						//create card objs put them in library
+						this.library.push(new Card( this.nums[n], this.suits[s], cardIntValue));
+					};
+				};		
+			};
+		}else if (this.numOfDeckToCreate == 0) {
+			//create test deck
+			for (var t = 0; t < 52; t++) {
+				this.library.push(new Card( "K", "Hearts", 10));
+				this.library.push(new Card( "K", "Diamonds", 10));
+			};
 		};
 	};
 	this.shuffle = function (deck){
@@ -55,6 +64,9 @@ var Player = function (startingMoney) {
 	this.isReady = false;
 	this.playerDrawDeck = "";
 	this.aceIndex = 0;
+	this.alreadySpilt = false;
+	this.gameResult = "";
+	this.spiltResult = "";
 	this.bet = function () {
 		// puts money from bankroll on onTableBet, use button to increase decrease bet
 		// once the bet button is hit player is now ready to start
@@ -84,7 +96,6 @@ var Player = function (startingMoney) {
 		// if there is a "bust"ed hand and there's an Ace, address the Ace value
 		if ((this.handValue > 21) && (this.aceIndex > 0)) {
 			// change the Ace to a 1 both in num and value
-			//debugger;
 			this.hand[this.aceIndex].num = "1";
 			this.hand[this.aceIndex].cardValue = 1;
 			//decrease the value of Ace to 1
@@ -119,7 +130,10 @@ var Player = function (startingMoney) {
 	this.spilt = function () {
 		// spilt hands into spilt hand
 		console.log("Hand has spilt into spiltHand.");
-
+		this.spiltHand[0] = this.hand.shift();
+		console.log(this.hand);
+		console.log(this.spiltHand);
+		this.alreadySpilt = true;
 	};
 	this.payout = function () {
 		// win/lose/push changes the player's bankroll

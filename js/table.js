@@ -17,8 +17,8 @@ $(function() {
 	//blackjack.playerActions("test");
  
 	//depending on number of players creates the player slot accordingly
-	if (blackjack.userPlayers.length > 1) {	
-		$("#slotA").click(function(){ blackjack.playerActions("test"); });
+	if (blackjack.userPlayers.length > 0) {	
+		$("#slotA").click(function(){ blackjack.startGame(); });
 	};
 });
 
