@@ -1,10 +1,10 @@
 //|Card| Constructor: takes argument, stores attrs, show/hide visible 
-var Card = function (assignNum, assignSuit, assignValue) {
+var Card = function (assignNum, assignSuit, assignValue, assignURL) {
 	this.num = assignNum;
 	this.suit = assignSuit;
 	this.cardValue = assignValue;
 	this.visible = true;
-	this.image = "url";
+	this.image = assignURL;
 	this.hide = function () {this.hidden = false};
 	this.show = function () {this.hidden = true};
 };
@@ -17,6 +17,7 @@ var Deck = function () {
 	this.createDeck = function (numOfDecks) {
 		this.numOfDeckToCreate = numOfDecks;
 		if (this.numOfDeckToCreate != 0) {
+			var currentCardCount = 1;
 			for (var d = 0; d < parseInt(this.numOfDeckToCreate); d++) {
 				//create num of deck equal to numOfDecks to make library of mulitple decks
 				for (var s=0; s<this.suits.length; s++) {
@@ -30,7 +31,9 @@ var Deck = function () {
 							var cardIntValue = parseInt(this.nums[n]);
 						}
 						//create card objs put them in library
-						this.library.push(new Card( this.nums[n], this.suits[s], cardIntValue));
+						var currentCardURL = "img/card_images_folder/" + currentCardCount + "cardimg.png";
+						this.library.push(new Card( this.nums[n], this.suits[s], cardIntValue, currentCardURL));
+						currentCardCount++;
 					};
 				};		
 			};

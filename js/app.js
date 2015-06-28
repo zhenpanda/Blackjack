@@ -25,7 +25,7 @@ var blackjack = {
 		// phase 0: setup this.makeGame, create player, dealer, deck, can hit start playing
 		this.shoe = prompt("How many decks would you like to play with?\n \nIncreasing the number of decks may give the house an advantage.", "1");
 		this.playerCount = prompt("How players do we have today?\n \nSupports (1-5) players.", "1");
-		this.playerStartMoney = prompt("How much money does each player have to start?", "100");
+		this.playerStartMoney = prompt("How much money does each player start with?", "100");
 		this.currentDeck = new Deck();
 		// create a deck from user's input num, shuffle it
 		this.currentDeck.createDeck(this.shoe);
@@ -83,6 +83,19 @@ var blackjack = {
 			// phase 2: init game, deals starting hand for each player/dealer, check for insurance, hit dealer
 			console.log("If dealer has an A, there are desire to insurances, do this step.")
 			// check priority run once wait for player to decide what to do next when they click button
+
+			// Deal out cards, Equivalent: $(document.createElement('img'))
+			// 1 player game setup
+			if (this.playerCount == 1) {
+				// set class depending on which card it currently is
+				var firstCard = $('<img class="first-card-norm">'); 
+				firstCard.attr('src', this.currentPlayer.hand[0].image);
+				firstCard.appendTo('#slotC');
+				var secondCard = $('<img class="second-card-norm">'); 
+				secondCard.attr('src', this.currentPlayer.hand[1].image);
+				secondCard.appendTo('#slotC');
+			};
+
 			this.priorityCheck();
 		}else{
 			alert("Not enough cards in the deck to play a game.")
@@ -116,6 +129,16 @@ var blackjack = {
 			this.currentPlayerHand = this.userPlayers[this.prorityHolder].hit(this.currentDeck.library);
 			//if player hit and doesn't bust, they can chose to keep hitting
 			console.log(this.userPlayers[this.prorityHolder].hand);
+			//add a card
+			var currentHandSize = this.userPlayers[this.prorityHolder].hand.length;
+			if (this.playerCount == 1) {
+				if (currentHandSize == 3) {
+					var addCard = $('<img class="third-card-norm">'); 
+					addCard.attr('src', this.currentPlayer.hand[2].image);
+					addCard.appendTo('#slotC');
+					console.log("added card.")
+				}; 
+			};
 			if (this.currentPlayerHand == "BUST") {
 				console.log(this.userPlayers[this.prorityHolder].hand);
 				//priority is passed if the player busts
