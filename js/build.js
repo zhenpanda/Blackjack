@@ -57,22 +57,41 @@ var Deck = function () {
 };
 //|Player| Constructor: create (player) obj, holds a [hand], hit, stand, spilt, doubleDown, surredner, insurance, takes argument from user
 var Player = function (startingMoney) {
+	this.isReady = false;
+	// money func
 	this.bankroll = startingMoney;
+	this.onTableBet = 10;
+	// game func
 	this.hand = [];
 	this.startingHand = []
 	this.handValue = 0;
 	this.spiltHand = [];
 	this.spiltHandValue = 0;
-	this.onTableBet = 0;
-	this.isReady = false;
 	this.playerDrawDeck = "";
 	this.aceIndex = 0;
 	this.alreadySpilt = false;
 	this.gameResult = "";
 	this.spiltResult = "";
-	this.bet = function () {
-		// puts money from bankroll on onTableBet, use button to increase decrease bet
-		// once the bet button is hit player is now ready to start
+	this.upbet = function () {
+		// puts money from bankroll on onTableBet, use button to increase bet
+		if (this.bankroll >= 5) {
+			this.bankroll = this.bankroll - 5;
+			this.onTableBet = this.onTableBet + 5;
+			console.log("Incrase Bet!");
+			console.log("Bank min " + this.bankroll);
+		};
+	};
+	this.downbet = function () {
+		// take money from bankroll on onTableBet, use button to decrease bet
+		if (this.onTableBet >= 5) {
+			this.bankroll = this.bankroll + 5;
+			this.onTableBet = this.onTableBet - 5;
+			console.log("decrease Bet!");
+			console.log("Bank min " + this.bankroll);
+		};
+	};
+	this.payout = function () {
+		// win/lose/push changes the player's bankroll
 	};
 	this.insurance = function () {
 		// check if has extra money, add to insurance, side bet
@@ -84,7 +103,6 @@ var Player = function (startingMoney) {
 		this.hand.push(this.playerDrawDeck.pop(), this.playerDrawDeck.pop());
 		return (this.hand);
 		// check for spilt-able hand
-		
 	};
 	this.checkHand = function () {
 		// checks current hand's value returns int to hand handValue
@@ -103,6 +121,7 @@ var Player = function (startingMoney) {
 			this.hand[this.aceIndex].cardValue = 1;
 			//decrease the value of Ace to 1
 			this.handValue = this.handValue - 10;
+			this.aceIndex = 0;
 			console.log("Ace was changed.")
 		};
 		console.log("Player's hand value is "+ this.handValue);
@@ -137,9 +156,6 @@ var Player = function (startingMoney) {
 		console.log(this.hand);
 		console.log(this.spiltHand);
 		this.alreadySpilt = true;
-	};
-	this.payout = function () {
-		// win/lose/push changes the player's bankroll
 	};
 };
 //|Dealer| Constructor: create (dealer) obj, holds a [hand], hit, stand, table takes care of money

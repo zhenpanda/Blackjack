@@ -8,16 +8,13 @@ $(function() {
 	//game starts, begin playing
 /*	blackjack.startGame();*/
 	
-	//player actions as follows
 /*	
-	blackjack.playerActions("stand");
 	blackjack.playerActions("hit");
+	blackjack.playerActions("stand");
 	blackjack.playerActions("double");
-	blackjack.playerActions("surrender");
 	blackjack.playerActions("spilt");
-	blackjack.playerActions("test");
 */
-	//create button element for existing items 
+	//create button element for creating game
 	$("#newGame").click(function(){
 		blackjack.makeGame();
 		blackjack.readyCheck();
@@ -25,13 +22,17 @@ $(function() {
 	$("#playGame").click(function(){
 		blackjack.startGame();
 	});
+	//create button element for player actions
+	$("#hit").click(function(){
+		blackjack.playerActions("hit");
+	});
+	$("#stand").click(function(){
+		blackjack.playerActions("stand");
+	});
+	$("#double").click(function(){
+		blackjack.playerActions("double");
+	});
 });
-
-//depending on number of players creates the player slot accordingly
-
-// hitButton.addEventListener("click", function() {
-// 	blackjack.playerActions("hit");
-// })
 
 
 

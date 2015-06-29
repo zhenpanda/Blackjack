@@ -1,9 +1,16 @@
+.focus{
+    opacity: 1.00;
+}
+.fade{
+    opacity: 0.45;
+}
 .hide{
     display: none;
 }
 .show{
     display: block;
 }
+/* ========== ========== Background CSS ========== ========== */
 .bg-img{
     background-image: url('../img/backgroundTable.jpg');
     position: relative;
@@ -29,8 +36,6 @@
     padding: 0;
     position: absolute;
     bottom: 157px;
-    background-color: white;
-    opacity: .10;
 }
 #slotB{
     width: 233px;
@@ -40,8 +45,6 @@
     position: absolute;
     bottom: 157px;
     left: 233px;
-    background-color: white;
-    opacity: .20;
 }
 #slotC{
     width: 233px;
@@ -60,8 +63,6 @@
     position: absolute;
     bottom: 157px;
     left: 699px;
-    background-color: white;
-    opacity: .30;
 }
 #slotE{
     width: 233px;
@@ -71,8 +72,6 @@
     position: absolute;
     bottom: 157px;
     left: 932px;
-    background-color: white;
-    opacity: .40;
 }
 /* ========== ========== Card Display CSS ========== ========== */
 .card-img{
@@ -114,6 +113,77 @@
     top: 125px;
     z-index: 60;
 }
+/* ========== ========== Betting Station Display CSS ========== ========== */
+.station-c-position{
+    width: 233px;
+    height: 278px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 157px;
+    left: 466px;
+}
+.betting-area-C{
+    position: absolute;
+    z-index: 100;
+    bottom: 0px;
+}
+#betting-area-C-char{
+    width: 53px;
+    height: 61px;
+    position: absolute;
+    z-index: 110;
+}
+.upBet{
+    width: 69px;
+    height: 34px;
+    position: absolute;
+    background-color: white;
+    opacity: 0.01;
+    z-index: 120;
+    bottom: 38px;
+    right: 18px;
+}
+.downBet{
+    width: 69px;
+    height: 34px;
+    position: absolute;
+    background-color: white;
+    opacity: 0.01;
+    z-index: 120;
+    bottom: 4px;
+    right: 18px;
+}
+.upBet:hover{
+   opacity: 0.15;
+}
+.downBet:hover{
+   opacity: 0.15;
+}
+.betText{
+    padding-top: 12px;
+    padding-left: 4px;
+    position: absolute;
+    width: 60px;
+    height: 32px;
+    z-index: 120;
+    bottom: 38px;
+    left: 70px;
+    color: white;
+    font-size: 25px;
+}
+.bankText{
+    padding-top: 12px;
+    padding-left: 4px;
+    position: absolute;
+    width: 60px;
+    height: 32px;
+    z-index: 120;
+    bottom: 6px;
+    left: 70px;
+    color: green;
+    font-size: 15px;
+}
 /* ========== ========== Game Setting Display CSS ========== ========== */
 #newGame{
     width: 110px;
@@ -137,6 +207,43 @@
    opacity: 0.05;
 }
 #playGame:hover{
+   opacity: 0.05;
+}
+/* ========== ========== Player Control Display CSS ========== ========== */
+#hit{
+    width: 100px;
+    height: 145px;
+    position: absolute;
+    bottom: 0px;
+    left: 528px;
+    background-color: yellow;
+    opacity: 0.0;    
+}
+#hit:hover{
+   opacity: 0.05;
+}
+#stand{
+    width: 118px;
+    height: 145px;
+    position: absolute;
+    bottom: 0px;
+    left: 628px;
+    background-color: yellow;
+    opacity: 0.0;
+}
+#stand:hover{
+   opacity: 0.05;
+}
+#double{
+    width: 124px;
+    height: 145px;
+    position: absolute;
+    bottom: 0px;
+    left: 748px;
+    background-color: yellow;
+    opacity: 0.0;
+}
+#double:hover{
    opacity: 0.05;
 }
 .spilt-control{

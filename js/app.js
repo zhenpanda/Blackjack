@@ -25,7 +25,7 @@ var blackjack = {
 		// phase 0: setup this.makeGame, create player, dealer, deck, can hit start playing
 		this.shoe = prompt("How many decks would you like to play with?\n \nIncreasing the number of decks may give the house an advantage.", "1");
 		this.playerCount = prompt("How players do we have today?\n \nSupports (1-5) players.", "1");
-		this.playerStartMoney = prompt("How much money does each player start with?", "100");
+		this.playerStartMoney = prompt("How much money does each player start with?", "110");
 		this.currentDeck = new Deck();
 		// create a deck from user's input num, shuffle it
 		this.currentDeck.createDeck(this.shoe);
@@ -36,6 +36,36 @@ var blackjack = {
 			this.userPlayers.push(this.currentPlayer);
 		};
 		console.log(this.userPlayers);
+		// create player betting stations
+		if (this.playerCount == 1) {
+			var firstStation = $('<img class="betting-area-C">'); 
+			firstStation.attr('src', "img/betting_station_folder/player1betArea.png");
+			firstStation.appendTo('#stationC');
+			var upBet = $('<div class="upBet">'); 
+			upBet.appendTo('#stationC');
+			//create bank/betting display text
+			var firstBank = $('<div class="bankText">');
+			firstBank.attr("id", "stationCBank");
+			firstBank.appendTo('#stationC');
+			var firstBet = $('<div class="betText">');
+			firstBet.attr("id", "stationCBet");
+			firstBet.appendTo('#stationC');
+			//javascript lose scope so well...
+			$("#stationCBet").html(" $ " + blackjack.userPlayers[0].onTableBet);
+			$("#stationCBank").html(" Bankroll \n$ " + blackjack.userPlayers[0].bankroll);
+			upBet.click(function(){
+				blackjack.userPlayers[0].upbet();
+				$("#stationCBet").html(" $ " + blackjack.userPlayers[0].onTableBet);
+				$("#stationCBank").html(" Bankroll \n$ " + blackjack.userPlayers[0].bankroll);
+			});
+			var downBet = $('<div class="downBet">'); 
+			downBet.appendTo('#stationC');
+			downBet.click(function(){
+				blackjack.userPlayers[0].downbet();
+				$("#stationCBet").html(" $ " + blackjack.userPlayers[0].onTableBet);
+				$("#stationCBank").html(" Bankroll \n$ " + blackjack.userPlayers[0].bankroll);
+			});
+		};
 		// create a dealer to join the game
 		this.dealer = new Dealer();
 		console.log(this.dealer);
@@ -48,6 +78,10 @@ var blackjack = {
 		// clear the board no cards on table
 		this.prorityHolder = 0;
 		proritySpiltHolder = 0;
+		// clean up dealer's hand display
+		if (this.playerCount == 1) {
+			$('#slotC').empty();
+		};
 		//check if the deck has at least 20 cards left
 		if (this.currentDeck.count() >= 20) {
 			console.log("Game has started!")
@@ -84,8 +118,7 @@ var blackjack = {
 			console.log("If dealer has an A, there are desire to insurances, do this step.")
 			// check priority run once wait for player to decide what to do next when they click button
 
-			// Deal out cards, Equivalent: $(document.createElement('img'))
-			// 1 player game setup
+			// Deal out cards and display them depending on num of player
 			if (this.playerCount == 1) {
 				// set class depending on which card it currently is
 				var firstCard = $('<img class="first-card-norm">'); 
@@ -116,6 +149,7 @@ var blackjack = {
 	},
 	// playerActionButton is target of the clicked button, current player is the prorityHolder, button finds the player, game is starting with player 1
 	playerActions: function (playerActionButton) {
+		var currentDisplayBlock = '#slotC';
 		// phase 3: each player plays, check game conditions for (hit/spilt/doubleDown/surrender)
 		if (playerActionButton == "stand") {
 			//stand: pass priority, nothing else happens on this turn
@@ -129,15 +163,28 @@ var blackjack = {
 			this.currentPlayerHand = this.userPlayers[this.prorityHolder].hit(this.currentDeck.library);
 			//if player hit and doesn't bust, they can chose to keep hitting
 			console.log(this.userPlayers[this.prorityHolder].hand);
-			//add a card
+			//add a card for each hit or bust
 			var currentHandSize = this.userPlayers[this.prorityHolder].hand.length;
-			if (this.playerCount == 1) {
-				if (currentHandSize == 3) {
-					var addCard = $('<img class="third-card-norm">'); 
-					addCard.attr('src', this.currentPlayer.hand[2].image);
-					addCard.appendTo('#slotC');
-					console.log("added card.")
-				}; 
+			if (currentHandSize == 3) {
+				var addCard = $('<img class="third-card-norm">'); 
+				addCard.attr('src', this.currentPlayer.hand[2].image);
+				addCard.appendTo(currentDisplayBlock);
+				console.log("added card.")
+			}else if (currentHandSize == 4) {
+				var addCard = $('<img class="fourth-card-norm">'); 
+				addCard.attr('src', this.currentPlayer.hand[3].image);
+				addCard.appendTo(currentDisplayBlock);
+				console.log("added card.")
+			}else if (currentHandSize == 5) {
+				var addCard = $('<img class="fifth-card-norm">'); 
+				addCard.attr('src', this.currentPlayer.hand[4].image);
+				addCard.appendTo(currentDisplayBlock);
+				console.log("added card.")
+			}else if (currentHandSize == 6) {
+				var addCard = $('<img class="sixth-card-norm">'); 
+				addCard.attr('src', this.currentPlayer.hand[5].image);
+				addCard.appendTo(currentDisplayBlock);
+				console.log("added card.")
 			};
 			if (this.currentPlayerHand == "BUST") {
 				console.log(this.userPlayers[this.prorityHolder].hand);
@@ -152,11 +199,14 @@ var blackjack = {
 			this.currentPlayerHand = this.userPlayers[this.prorityHolder].hit(this.currentDeck.library);
 			console.log(this.userPlayers[this.prorityHolder].hand);
 			this.userPlayers[this.prorityHolder].checkHand();
-			this.prorityHolder++;
-			this.priorityCheck();
-		}else if (playerActionButton == "surrender") {
-			//surrender: get half money back, pass priority & lose
-			console.log("Half of the bet is taken away from target player.")
+			//add a card display
+			var currentHandSize = this.userPlayers[this.prorityHolder].hand.length;
+			if (currentHandSize == 3) {
+				var addCard = $('<img class="third-card-norm">'); 
+				addCard.attr('src', this.currentPlayer.hand[2].image);
+				addCard.appendTo(currentDisplayBlock);
+				console.log("added card.")
+			}
 			this.prorityHolder++;
 			this.priorityCheck();
 		}else if (playerActionButton == "spilt") {
@@ -167,9 +217,6 @@ var blackjack = {
 			};
 			//proritySpiltHolder
 			//spiltAces: put each Ace in each hand, but only get one more card on each hand
-		}else if (playerActionButton == "test") {
-			//used to test the buttons
-			alert("This is a button test!");
 		};
 	},
 	dealerAction: function () {
@@ -218,4 +265,3 @@ var blackjack = {
 		// phase 8: payout to each spilt player 
 	}
 };
-/* up up down down left right left right ba start (cheat happenes) */
