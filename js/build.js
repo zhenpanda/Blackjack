@@ -17,8 +17,8 @@ var Deck = function () {
 	this.createDeck = function (numOfDecks) {
 		this.numOfDeckToCreate = numOfDecks;
 		if (this.numOfDeckToCreate != 0) {
-			var currentCardCount = 1;
 			for (var d = 0; d < parseInt(this.numOfDeckToCreate); d++) {
+				var currentCardCount = 1;
 				//create num of deck equal to numOfDecks to make library of mulitple decks
 				for (var s=0; s<this.suits.length; s++) {
 					for (var n=0; n<this.nums.length; n++) {
@@ -225,5 +225,48 @@ var playerChar = {
 	"img/player_char_folder/bw2player.png",
 	"img/player_char_folder/bw3player.png",
 	"img/player_char_folder/bw4player.png",
-	"img/player_char_folder/bw5player.png"]
+	"img/player_char_folder/bw5player.png"
+	],
+	playerCharPic: [
+	"img/player_char_folder/1player.png",
+	"img/player_char_folder/2player.png",
+	"img/player_char_folder/3player.png",
+	"img/player_char_folder/4player.png",
+	"img/player_char_folder/5player.png"
+	],
+	playerStation: [
+	"stationA",
+	"stationB",
+	"stationC",
+	"stationD",
+	"stationE"
+	],
+	playerStationBoard: [
+	"img/betting_station_folder/betting_station_5.png",
+	"img/betting_station_folder/betting_station_4.png",
+	"img/betting_station_folder/betting_station_3.png",
+	"img/betting_station_folder/betting_station_2.png",
+	"img/betting_station_folder/betting_station_1.png"
+	],
+	playerStationBank: [
+	"stationABank",
+	"stationBBank",
+	"stationCBank",
+	"stationDBank",
+	"stationEBank"
+	],
+	playerStationBet: [
+	"stationABet",
+	"stationBBet",
+	"stationCBet",
+	"stationDBet",
+	"stationEBet"
+	],
+	playerSlot: [
+	"slotA",
+	"slotB",
+	"slotC",
+	"slotD",
+	"slotE"
+	]
 };

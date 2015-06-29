@@ -38,7 +38,7 @@ var blackjack = {
 			this.userPlayers.push(this.currentPlayer);
 		};
 		console.log(this.userPlayers);
-		// create player betting stations
+		// create player betting stations for 1 player game
 		if (this.playerCount == 1) {
 			var firstStation = $('<img class="betting-area-C">'); 
 			firstStation.attr('src', "img/betting_station_folder/player1betArea.png");
@@ -71,6 +71,96 @@ var blackjack = {
 			var firstBnwPic = $('<img class="black-white-pic">'); 
 			firstBnwPic.attr('src', playerChar.playerBlackWhitePic[0]);
 			firstBnwPic.appendTo('#stationC');
+			//create display pic
+			var playerPic = $('<img class="player-pic">'); 
+			playerPic.attr('src', playerChar.playerCharPic[0]);
+			playerPic.appendTo(".playerBoard");
+		}else if (this.playerCount > 1) {
+		// create for 5 player game loop throught to create them
+			for (var r = 0; r < this.playerCount; r++) {
+				console.log("creating stations.")
+				var currentStation = $('<img class="betting-area-C">'); 
+				currentStation.attr('src', playerChar.playerStationBoard[r]);
+				currentStation.appendTo("#" + playerChar.playerStation[r]);
+				//create bank/betting display text
+				var currentBank = $('<div class="bankText">');
+				currentBank.attr("id", playerChar.playerStationBank[r]);
+				currentBank.appendTo("#" + playerChar.playerStation[r]);
+				var currentBet = $('<div class="betText">');
+				currentBet.attr("id", playerChar.playerStationBet[r]);
+				currentBet.appendTo("#" + playerChar.playerStation[r]);
+				var upBet = $('<div class="upBet">'); 
+				upBet.appendTo("#" + playerChar.playerStation[r]);
+				var downBet = $('<div class="downBet">'); 
+				downBet.appendTo("#" + playerChar.playerStation[r]);
+				$("#" + playerChar.playerStationBet[r]).html(" $ " + this.userPlayers[r].onTableBet);
+				$("#" + playerChar.playerStationBank[r]).html(" Bankroll \n$ " + this.userPlayers[r].bankroll);
+				//javascript lose scope so well...betting increase/decrease
+				if (r == 0) {
+					upBet.click(function(){
+						blackjack.userPlayers[0].upbet();
+						$("#" + playerChar.playerStationBet[0]).html(" $ " + blackjack.userPlayers[0].onTableBet);
+						$("#" + playerChar.playerStationBank[0]).html(" Bankroll \n$ " + blackjack.userPlayers[0].bankroll);
+					});
+					downBet.click(function(){
+						blackjack.userPlayers[0].downbet();
+						$("#" + playerChar.playerStationBet[0]).html(" $ " + blackjack.userPlayers[0].onTableBet);
+						$("#" + playerChar.playerStationBank[0]).html(" Bankroll \n$ " + blackjack.userPlayers[0].bankroll);
+					});
+				}else if (r == 1) {
+					upBet.click(function(){
+						blackjack.userPlayers[1].upbet();
+						$("#" + playerChar.playerStationBet[1]).html(" $ " + blackjack.userPlayers[1].onTableBet);
+						$("#" + playerChar.playerStationBank[1]).html(" Bankroll \n$ " + blackjack.userPlayers[1].bankroll);
+					});
+					downBet.click(function(){
+						blackjack.userPlayers[1].downbet();
+						$("#" + playerChar.playerStationBet[1]).html(" $ " + blackjack.userPlayers[1].onTableBet);
+						$("#" + playerChar.playerStationBank[1]).html(" Bankroll \n$ " + blackjack.userPlayers[1].bankroll);
+					});
+				}else if (r == 2) {
+					upBet.click(function(){
+						blackjack.userPlayers[2].upbet();
+						$("#" + playerChar.playerStationBet[2]).html(" $ " + blackjack.userPlayers[2].onTableBet);
+						$("#" + playerChar.playerStationBank[2]).html(" Bankroll \n$ " + blackjack.userPlayers[2].bankroll);
+					});
+					downBet.click(function(){
+						blackjack.userPlayers[2].downbet();
+						$("#" + playerChar.playerStationBet[2]).html(" $ " + blackjack.userPlayers[2].onTableBet);
+						$("#" + playerChar.playerStationBank[2]).html(" Bankroll \n$ " + blackjack.userPlayers[2].bankroll);
+					});
+				}else if (r == 3) {
+					upBet.click(function(){
+						blackjack.userPlayers[3].upbet();
+						$("#" + playerChar.playerStationBet[3]).html(" $ " + blackjack.userPlayers[3].onTableBet);
+						$("#" + playerChar.playerStationBank[3]).html(" Bankroll \n$ " + blackjack.userPlayers[3].bankroll);
+					});
+					downBet.click(function(){
+						blackjack.userPlayers[3].downbet();
+						$("#" + playerChar.playerStationBet[3]).html(" $ " + blackjack.userPlayers[3].onTableBet);
+						$("#" + playerChar.playerStationBank[3]).html(" Bankroll \n$ " + blackjack.userPlayers[3].bankroll);
+					});
+				}else if (r == 4) {
+					upBet.click(function(){
+						blackjack.userPlayers[4].upbet();
+						$("#" + playerChar.playerStationBet[4]).html(" $ " + blackjack.userPlayers[4].onTableBet);
+						$("#" + playerChar.playerStationBank[4]).html(" Bankroll \n$ " + blackjack.userPlayers[4].bankroll);
+					});
+					downBet.click(function(){
+						blackjack.userPlayers[4].downbet();
+						$("#" + playerChar.playerStationBet[4]).html(" $ " + blackjack.userPlayers[4].onTableBet);
+						$("#" + playerChar.playerStationBank[4]).html(" Bankroll \n$ " + blackjack.userPlayers[4].bankroll);
+					});
+				};
+				//create player char pic bnw
+				var currentBnwPic = $('<img class="black-white-pic">'); 
+				currentBnwPic.attr('src', playerChar.playerBlackWhitePic[r]);
+				currentBnwPic.appendTo("#" + playerChar.playerStation[r]);
+				//create display pic
+				var playerPic = $('<img class="player-pic">'); 
+				playerPic.attr('src', playerChar.playerCharPic[r]);
+				playerPic.appendTo(".playerBoard");
+			};
 		};
 		// create a dealer to join the game
 		this.dealer = new Dealer();
@@ -87,6 +177,13 @@ var blackjack = {
 			$('#slotC').empty();
 			$('#slotC').removeClass();
 			$('#result').remove();
+		}else if (this.playerCount > 1) {
+			console.log("clean each slot.")
+			for (var c = 0; c < this.playerCount; c++) {
+				$('#' + playerChar.playerSlot[c]).empty();
+				$('#' + playerChar.playerSlot[c]).removeClass();
+				$('#result').remove();
+			};
 		};
 		//check if the deck has at least 20 cards left
 		if (this.currentDeck.count() >= 20) {
@@ -140,6 +237,19 @@ var blackjack = {
 				secondCard.attr('src', this.currentPlayer.hand[1].image);
 				secondCard.appendTo('#slotC');
 			};
+			console.log(this.playerCount);
+			if(this.playerCount > 1) {
+				// loop deal cards out to each player
+				for (var e = 0; e < this.playerCount; e++){
+					console.log("deal out cards.");
+					var firstCardCurrent = $('<img class="first-card-norm">'); 
+					firstCardCurrent.attr('src', this.userPlayers[e].hand[0].image);
+					firstCardCurrent.appendTo('#' + playerChar.playerSlot[e]);
+					var secondCardCurrent = $('<img class="second-card-norm">'); 
+					secondCardCurrent.attr('src', this.userPlayers[e].hand[1].image);
+					secondCardCurrent.appendTo('#' + playerChar.playerSlot[e]);
+				};
+			};
 			this.priorityCheck();
 		}else{
 			alert("Not enough cards in the deck to play a game.")
@@ -148,16 +258,20 @@ var blackjack = {
 	//priorityCheck keeps the flow of the game and keep track of each players turn
 	priorityCheck: function () {
 		// fade player who pass prority
-		if (this.prorityHolder > 0) {
-			$( "#slotC" ).addClass( "fade" );
+		if(this.playerCount == 1) {
+			if (this.prorityHolder > 0) {
+				$( "#slotC" ).addClass( "fade" );
+			};
 		};
 		// check default priority, while current player has priority give that player button controls
 		if (this.prorityHolder < this.playerCount) {
 			// priority is to give control of buttons to target player, show button via CSS design
 			console.log("This is currently player (" + (this.prorityHolder + 1) + ")'s turn.")
 			// check cards in player hands use CSS style to show player their options
-
 			console.log("Display the the style GUI for player " + (this.prorityHolder + 1));
+			var playerPic = $('.player-pic'); 
+			playerPic.attr('src', playerChar.playerCharPic[this.prorityHolder]);
+			playerPic.appendTo(".playerBoard");
 		}else if (this.prorityHolder == this.playerCount) {
 			console.log("All players are done with their actions, dealer's show now.");
 			this.dealerAction();
@@ -165,7 +279,11 @@ var blackjack = {
 	},
 	// playerActionButton is target of the clicked button, current player is the prorityHolder, button finds the player, game is starting with player 1
 	playerActions: function (playerActionButton) {
-		var currentDisplayBlock = '#slotC';
+		if(this.playerCount == 1) {
+			var currentDisplayBlock = '#slotC';
+		}else if (this.playerCount > 1) {
+			var currentDisplayBlock = ("#" + playerChar.playerSlot[this.prorityHolder])
+		};
 		// phase 3: each player plays, check game conditions for (hit/spilt/doubleDown/surrender)
 		if (playerActionButton == "stand") {
 			//stand: pass priority, nothing else happens on this turn
@@ -183,22 +301,22 @@ var blackjack = {
 			var currentHandSize = this.userPlayers[this.prorityHolder].hand.length;
 			if (currentHandSize == 3) {
 				var addCard = $('<img class="third-card-norm">'); 
-				addCard.attr('src', this.currentPlayer.hand[2].image);
+				addCard.attr('src', this.userPlayers[this.prorityHolder].hand[2].image);
 				addCard.appendTo(currentDisplayBlock);
 				console.log("added card.")
 			}else if (currentHandSize == 4) {
 				var addCard = $('<img class="fourth-card-norm">'); 
-				addCard.attr('src', this.currentPlayer.hand[3].image);
+				addCard.attr('src', this.userPlayers[this.prorityHolder].hand[3].image);
 				addCard.appendTo(currentDisplayBlock);
 				console.log("added card.")
 			}else if (currentHandSize == 5) {
 				var addCard = $('<img class="fifth-card-norm">'); 
-				addCard.attr('src', this.currentPlayer.hand[4].image);
+				addCard.attr('src', this.userPlayers[this.prorityHolder].hand[4].image);
 				addCard.appendTo(currentDisplayBlock);
 				console.log("added card.")
 			}else if (currentHandSize == 6) {
 				var addCard = $('<img class="sixth-card-norm">'); 
-				addCard.attr('src', this.currentPlayer.hand[5].image);
+				addCard.attr('src', this.userPlayers[this.prorityHolder].hand[5].image);
 				addCard.appendTo(currentDisplayBlock);
 				console.log("added card.")
 			};
@@ -271,12 +389,17 @@ var blackjack = {
 			if (this.userPlayers[p].gameResult == "WIN") {
 				console.log("Player (" + (p+1) + ") wins!");
 				this.userPlayers[p].bankroll = parseInt(this.userPlayers[p].bankroll) + parseInt(this.userPlayers[p].onTableBet);
-				this.userPlayers[p].onTableBet = this.userPlayers[p].onTableBet;
+				console.log(this.userPlayers[p].bankroll);
+				this.userPlayers[p].onTableBet = this.userPlayers[p].onTableBet;					
 				// display win/lose/push to each player
 				var result = $('<img class="result-display">');
 				result.attr('src', "img/game_result_folder/win.png");
 				result.attr('id', "result");
-				result.appendTo('#stationC');
+				if (this.playerCount == 1) {
+					result.appendTo("#" + playerChar.playerStation[2]);
+				}else{
+					result.appendTo("#" + playerChar.playerStation[p]);
+				}
 			}else if (this.userPlayers[p].gameResult == "PUSH") {
 				this.userPlayers[p].bankroll = this.userPlayers[p].bankroll;
 				this.userPlayers[p].onTableBet = this.userPlayers[p].onTableBet;
@@ -284,22 +407,35 @@ var blackjack = {
 				var result = $('<img class="result-display">');
 				result.attr('src', "img/game_result_folder/push.png");
 				result.attr('id', "result");
-				result.appendTo('#stationC');
+				if (this.playerCount == 1) {
+					result.appendTo("#" + playerChar.playerStation[2]);
+				}else{
+					result.appendTo("#" + playerChar.playerStation[p]);
+				}
 			}else if (this.userPlayers[p].gameResult == "LOSE") {
-				this.userPlayers[p].bankroll = this.userPlayers[p].bankroll - this.userPlayers[p].onTableBet;
-				this.userPlayers[p].onTableBet = 0;
+				blackjack.userPlayers[p].onTableBet = 0;
 				console.log("Player (" + (p+1) + ") lose!");
 				var result = $('<img class="result-display">');
 				result.attr('src', "img/game_result_folder/lose.png");
 				result.attr('id', "result");
-				result.appendTo('#stationC');			
+				if (this.playerCount == 1) {
+					result.appendTo("#" + playerChar.playerStation[2]);
+				}else{
+					result.appendTo("#" + playerChar.playerStation[p]);
+				}	
 			};
 			//update HTML money display
-			$("#stationCBet").html(" $ " + blackjack.userPlayers[p].onTableBet);
-			$("#stationCBank").html(" Bankroll \n$ " + blackjack.userPlayers[p].bankroll);
+			if(this.playerCount == 1) {
+				$("#stationCBet").html(" $ " + this.userPlayers[0].onTableBet);
+				$("#stationCBank").html(" Bankroll \n$ " + this.userPlayers[0].bankroll);
+			}else{			
+				$("#" + playerChar.playerStationBet[p]).html(" $ " + this.userPlayers[p].onTableBet);
+				$("#" + playerChar.playerStationBank[p]).html(" Bankroll \n$ " + this.userPlayers[p].bankroll);
+			};
+
 			//show dealer's card
-			this.hidden = $('#hiddenCard');
-			this.hidden.attr('src', blackjack.dealer.hand[0].image);
+			var hidden = $('#hiddenCard');
+			hidden.attr('src', blackjack.dealer.hand[0].image);
 			for (var d = 1; d < this.dealer.hand.length; d++) {
 				if (d == 2) {
 					var shownSecondCard = $('<img id="showCard-2">');

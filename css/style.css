@@ -2,7 +2,7 @@
     opacity: 1.00;
 }
 .fade{
-    opacity: 0.15;
+    opacity: 0.25;
 }
 .hide{
     display: none;
@@ -29,7 +29,7 @@
     background-color:black;
 }
 /* ========== ========== Player Cards Display Slots CSS ========== ========== */
-#slotA{
+#slotE{
     width: 233px;
     height: 278px;
     margin: 0;
@@ -37,7 +37,7 @@
     position: absolute;
     bottom: 157px;
 }
-#slotB{
+#slotD{
     width: 233px;
     height: 278px;
     margin: 0;
@@ -55,7 +55,7 @@
     bottom: 157px;
     left: 466px;
 }
-#slotD{
+#slotB{
     width: 233px;
     height: 278px;
     margin: 0;
@@ -64,7 +64,7 @@
     bottom: 157px;
     left: 699px;
 }
-#slotE{
+#slotA{
     width: 233px;
     height: 278px;
     margin: 0;
@@ -114,6 +114,24 @@
     z-index: 60;
 }
 /* ========== ========== Betting Station Display CSS ========== ========== */
+.station-a-position{
+    width: 233px;
+    height: 278px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 157px;
+    right: 0px;
+}
+.station-b-position{
+    width: 233px;
+    height: 278px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 157px;
+    right: 225px;
+}
 .station-c-position{
     width: 233px;
     height: 278px;
@@ -122,6 +140,24 @@
     position: absolute;
     bottom: 157px;
     left: 466px;
+}
+.station-d-position{
+    width: 233px;
+    height: 278px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 157px;
+    left: 233px;
+}
+.station-e-position{
+    width: 233px;
+    height: 278px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 157px;
+    left: 0px;
 }
 .betting-area-C{
     position: absolute;
@@ -315,11 +351,15 @@
     z-index: 200;
     opacity: 1.0;
 }
-
-
-
-
-
-
-
-
+.player-pic{
+    width: 74px;
+    height: 84px;
+    position: absolute;
+    bottom: 51px;
+    left: 283px;
+    z-index: 200;
+}
+.playerBoard{
+    width: 0px;
+    height: 675px;
+}
