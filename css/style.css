@@ -2,7 +2,7 @@
     opacity: 1.00;
 }
 .fade{
-    opacity: 0.45;
+    opacity: 0.15;
 }
 .hide{
     display: none;
@@ -134,6 +134,14 @@
     position: absolute;
     z-index: 110;
 }
+.black-white-pic{
+    width: 53px;
+    height: 61px;
+    position: absolute;
+    z-index: 120;
+    left: 10px;
+    bottom: 8px;
+}
 .upBet{
     width: 69px;
     height: 34px;
@@ -209,6 +217,49 @@
 #playGame:hover{
    opacity: 0.05;
 }
+#dealerBox{
+    width: 215px;
+    height: 160px;
+    position: absolute;
+    right: 40px;
+    top: 45px;
+}
+#hiddenCard{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+}
+#showCard-1{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    z-index: 10;
+}
+#showCard-2{
+    position: absolute;
+    top: 30px;
+    right: 15px;
+    z-index: 20;
+}
+#showCard-3{
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    z-index: 30;
+}
+#showCard-4{
+    position: absolute;
+    top: 70px;
+    right: 5px;
+    z-index: 40;
+}
+#showCard-5{
+    position: absolute;
+    top: 90px;
+    right: 0px;
+    z-index: 50;
+}
 /* ========== ========== Player Control Display CSS ========== ========== */
 #hit{
     width: 100px;
@@ -235,7 +286,7 @@
    opacity: 0.05;
 }
 #double{
-    width: 124px;
+    width: 120px;
     height: 145px;
     position: absolute;
     bottom: 0px;
@@ -254,4 +305,21 @@
     bottom: 0px;
     background-image: url('../img/splitControls.png')
 }
-/*hover effects*/
+/* ========== ========== Game Results Display CSS ========== ========== */
+.result-display{
+    width: 150px;
+    height: 157px;
+    position: absolute;
+    top: 25px;
+    left: 40px;
+    z-index: 200;
+    opacity: 1.0;
+}
+
+
+
+
+
+
+
+

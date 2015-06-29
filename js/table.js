@@ -17,7 +17,6 @@ $(function() {
 	//create button element for creating game
 	$("#newGame").click(function(){
 		blackjack.makeGame();
-		blackjack.readyCheck();
 	});
 	$("#playGame").click(function(){
 		blackjack.startGame();

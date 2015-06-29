@@ -59,8 +59,8 @@ var Deck = function () {
 var Player = function (startingMoney) {
 	this.isReady = false;
 	// money func
-	this.bankroll = startingMoney;
 	this.onTableBet = 10;
+	this.bankroll = startingMoney - 10;
 	// game func
 	this.hand = [];
 	this.startingHand = []
@@ -69,6 +69,8 @@ var Player = function (startingMoney) {
 	this.spiltHandValue = 0;
 	this.playerDrawDeck = "";
 	this.aceIndex = 0;
+	// player actions
+	this.doubledowned = false;
 	this.alreadySpilt = false;
 	this.gameResult = "";
 	this.spiltResult = "";
@@ -217,4 +219,11 @@ var Dealer = function () {
 		};
 	};
 };
-//(TestDeck) a pre-set deck for testing the game
+var playerChar = {
+	playerBlackWhitePic: [
+	"img/player_char_folder/bw1player.png",
+	"img/player_char_folder/bw2player.png",
+	"img/player_char_folder/bw3player.png",
+	"img/player_char_folder/bw4player.png",
+	"img/player_char_folder/bw5player.png"]
+};

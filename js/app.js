@@ -20,6 +20,8 @@ var blackjack = {
 	prorityHolder: 0,
 	//spilt prority check if current play has pass proripty playing a spilt hand
 	proritySpiltHolder: 0,
+	//more attr
+	hidden : "",
 	// users hits start button: prompts user inputs, create player, dealer, deck
 	makeGame: function (startGameButton) {
 		// phase 0: setup this.makeGame, create player, dealer, deck, can hit start playing
@@ -50,7 +52,7 @@ var blackjack = {
 			var firstBet = $('<div class="betText">');
 			firstBet.attr("id", "stationCBet");
 			firstBet.appendTo('#stationC');
-			//javascript lose scope so well...
+			//javascript lose scope so well...betting increase/decrease
 			$("#stationCBet").html(" $ " + blackjack.userPlayers[0].onTableBet);
 			$("#stationCBank").html(" Bankroll \n$ " + blackjack.userPlayers[0].bankroll);
 			upBet.click(function(){
@@ -65,22 +67,26 @@ var blackjack = {
 				$("#stationCBet").html(" $ " + blackjack.userPlayers[0].onTableBet);
 				$("#stationCBank").html(" Bankroll \n$ " + blackjack.userPlayers[0].bankroll);
 			});
+			//create player char pic bnw
+			var firstBnwPic = $('<img class="black-white-pic">'); 
+			firstBnwPic.attr('src', playerChar.playerBlackWhitePic[0]);
+			firstBnwPic.appendTo('#stationC');
 		};
 		// create a dealer to join the game
 		this.dealer = new Dealer();
 		console.log(this.dealer);
 	},
-	readyCheck: function (readyButton) {
-		// phase 1: upkeep. each player bets, hits ready button, waits for game to start
-		console.log("all players have entered desired bets and ready to play.\n \nLet's get it on!");
-	},
+	// starts new game once run
 	startGame: function () {
 		// clear the board no cards on table
 		this.prorityHolder = 0;
 		proritySpiltHolder = 0;
-		// clean up dealer's hand display
+		// clean up player display
+		$("#dealerBox").empty();
 		if (this.playerCount == 1) {
 			$('#slotC').empty();
+			$('#slotC').removeClass();
+			$('#result').remove();
 		};
 		//check if the deck has at least 20 cards left
 		if (this.currentDeck.count() >= 20) {
@@ -113,11 +119,17 @@ var blackjack = {
 					console.log("No doubles here, keep going.")
 				};
 			};
-			console.log("There are " + this.currentDeck.count() + " left in the deck.");
+			// Deal out cards for dealer
+			var hiddenCard = $('<img id="hiddenCard">');
+			hiddenCard.attr('src', "img/card_images_folder/rback.png");
+			hiddenCard.appendTo('#dealerBox');
+			var shownFirstCard = $('<img id="showCard-1">');
+			shownFirstCard.attr('src', this.dealer.hand[1].image);
+			shownFirstCard.appendTo('#dealerBox');
 			// phase 2: init game, deals starting hand for each player/dealer, check for insurance, hit dealer
-			console.log("If dealer has an A, there are desire to insurances, do this step.")
+			console.log("There are " + this.currentDeck.count() + " left in the deck.");
 			// check priority run once wait for player to decide what to do next when they click button
-
+			console.log("If dealer has an A, there are desire to insurances, do this step.")
 			// Deal out cards and display them depending on num of player
 			if (this.playerCount == 1) {
 				// set class depending on which card it currently is
@@ -128,7 +140,6 @@ var blackjack = {
 				secondCard.attr('src', this.currentPlayer.hand[1].image);
 				secondCard.appendTo('#slotC');
 			};
-
 			this.priorityCheck();
 		}else{
 			alert("Not enough cards in the deck to play a game.")
@@ -136,11 +147,16 @@ var blackjack = {
 	},
 	//priorityCheck keeps the flow of the game and keep track of each players turn
 	priorityCheck: function () {
+		// fade player who pass prority
+		if (this.prorityHolder > 0) {
+			$( "#slotC" ).addClass( "fade" );
+		};
 		// check default priority, while current player has priority give that player button controls
 		if (this.prorityHolder < this.playerCount) {
 			// priority is to give control of buttons to target player, show button via CSS design
 			console.log("This is currently player (" + (this.prorityHolder + 1) + ")'s turn.")
 			// check cards in player hands use CSS style to show player their options
+
 			console.log("Display the the style GUI for player " + (this.prorityHolder + 1));
 		}else if (this.prorityHolder == this.playerCount) {
 			console.log("All players are done with their actions, dealer's show now.");
@@ -207,6 +223,7 @@ var blackjack = {
 				addCard.appendTo(currentDisplayBlock);
 				console.log("added card.")
 			}
+			this.userPlayers[this.prorityHolder].doubledowned = true;
 			this.prorityHolder++;
 			this.priorityCheck();
 		}else if (playerActionButton == "spilt") {
@@ -231,7 +248,7 @@ var blackjack = {
 			this.userPlayers[p].checkHand();
 			this.currentPlayerHandValue = this.userPlayers[p].handValue;
 			console.log("Player (" + (p+1) + ") hand " + this.currentPlayerHandValue + " vs dealer " + this.dealerHandValue)
-			//compare the current player's hand against the dealer
+			// phase 6: each spilt hand compare against the dealer natural/win/lose/push
 			if (this.currentPlayerHandValue == this.dealerHandValue || (this.currentPlayerHandValue > 21 && this.dealerHandValue > 21)) {
 				this.userPlayers[p].gameResult = "PUSH";
 			};
@@ -250,18 +267,60 @@ var blackjack = {
 					this.userPlayers[p].gameResult = "LOSE";
 				};
 			};
-			// display win/lose/push to each player
+			// phase 7: payout to each player, non-spilt
 			if (this.userPlayers[p].gameResult == "WIN") {
 				console.log("Player (" + (p+1) + ") wins!");
+				this.userPlayers[p].bankroll = parseInt(this.userPlayers[p].bankroll) + parseInt(this.userPlayers[p].onTableBet);
+				this.userPlayers[p].onTableBet = this.userPlayers[p].onTableBet;
+				// display win/lose/push to each player
+				var result = $('<img class="result-display">');
+				result.attr('src', "img/game_result_folder/win.png");
+				result.attr('id', "result");
+				result.appendTo('#stationC');
 			}else if (this.userPlayers[p].gameResult == "PUSH") {
+				this.userPlayers[p].bankroll = this.userPlayers[p].bankroll;
+				this.userPlayers[p].onTableBet = this.userPlayers[p].onTableBet;
 				console.log("Push. It's a tie.")
+				var result = $('<img class="result-display">');
+				result.attr('src', "img/game_result_folder/push.png");
+				result.attr('id', "result");
+				result.appendTo('#stationC');
 			}else if (this.userPlayers[p].gameResult == "LOSE") {
+				this.userPlayers[p].bankroll = this.userPlayers[p].bankroll - this.userPlayers[p].onTableBet;
+				this.userPlayers[p].onTableBet = 0;
 				console.log("Player (" + (p+1) + ") lose!");
+				var result = $('<img class="result-display">');
+				result.attr('src', "img/game_result_folder/lose.png");
+				result.attr('id', "result");
+				result.appendTo('#stationC');			
+			};
+			//update HTML money display
+			$("#stationCBet").html(" $ " + blackjack.userPlayers[p].onTableBet);
+			$("#stationCBank").html(" Bankroll \n$ " + blackjack.userPlayers[p].bankroll);
+			//show dealer's card
+			this.hidden = $('#hiddenCard');
+			this.hidden.attr('src', blackjack.dealer.hand[0].image);
+			for (var d = 1; d < this.dealer.hand.length; d++) {
+				if (d == 2) {
+					var shownSecondCard = $('<img id="showCard-2">');
+					shownSecondCard.attr('src', this.dealer.hand[d].image);
+					shownSecondCard.appendTo('#dealerBox');
+				}else if (d == 3) {
+					var shownThirdCard = $('<img id="showCard-3">');
+					shownThirdCard.attr('src', this.dealer.hand[d].image);
+					shownThirdCard.appendTo('#dealerBox');
+				}else if (d == 4) {
+					var shownFourthCard = $('<img id="showCard-4">');
+					shownFourthCard.attr('src', this.dealer.hand[d].image);
+					shownFourthCard.appendTo('#dealerBox');
+				}else if (d == 5) {
+					var shownFifthCard = $('<img id="showCard-5">');
+					shownFifthCard.attr('src', this.dealer.hand[d].image);
+					shownFifthCard.appendTo('#dealerBox');
+				};
 			};
 		};
-		// phase 6: each spilt hand compare against the dealer natural/win/lose/push
-		console.log("This is where all spilt hand is checked, dealer compare against each spilt hand.");
-		// phase 7: payout to each player, non-spilt
 		// phase 8: payout to each spilt player 
+		console.log("This is where all spilt hand is checked, dealer compare against each spilt hand.");
 	}
 };
