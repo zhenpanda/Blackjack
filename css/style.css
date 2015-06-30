@@ -1,0 +1,365 @@
+.focus{
+    opacity: 1.00;
+}
+.fade{
+    opacity: 0.25;
+}
+.hide{
+    display: none;
+}
+.show{
+    display: block;
+}
+/* ========== ========== Background CSS ========== ========== */
+.bg-img{
+    background-image: url('../img/backgroundTable.jpg');
+    position: relative;
+    width: 1165px;
+    height: 675px;
+    margin-left: auto;
+    margin-right: auto;
+    background-repeat: no-repeat;  
+    z-index: -500px;
+}
+.body-style{
+    padding: 0;
+    margin: auto;
+    padding: auto;
+    padding-top: 2px;
+    background-color:black;
+}
+/* ========== ========== Player Cards Display Slots CSS ========== ========== */
+#slotE{
+    width: 233px;
+    height: 278px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 157px;
+}
+#slotD{
+    width: 233px;
+    height: 278px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 157px;
+    left: 233px;
+}
+#slotC{
+    width: 233px;
+    height: 278px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 157px;
+    left: 466px;
+}
+#slotB{
+    width: 233px;
+    height: 278px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 157px;
+    left: 699px;
+}
+#slotA{
+    width: 233px;
+    height: 278px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 157px;
+    left: 932px;
+}
+/* ========== ========== Card Display CSS ========== ========== */
+.card-img{
+    width: 91px;
+    height: 127px;
+}
+.first-card-norm{
+    position: absolute;
+    left: 5px;
+    z-index: 10;
+}
+.second-card-norm{
+    position: absolute;
+    left: 10px;
+    top: 25px;
+    z-index: 20;
+}
+.third-card-norm{
+    position: absolute;
+    left: 15px;
+    top: 50px;
+    z-index: 30;
+}
+.fourth-card-norm{
+    position: absolute;
+    left: 20px;
+    top: 75px;
+    z-index: 40;
+}
+.fifth-card-norm{
+    position: absolute;
+    left: 25px;
+    top: 100px;
+    z-index: 50;
+}
+.sixth-card-norm{
+    position: absolute;
+    left: 30px;
+    top: 125px;
+    z-index: 60;
+}
+/* ========== ========== Betting Station Display CSS ========== ========== */
+.station-a-position{
+    width: 233px;
+    height: 278px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 157px;
+    right: 0px;
+}
+.station-b-position{
+    width: 233px;
+    height: 278px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 157px;
+    right: 225px;
+}
+.station-c-position{
+    width: 233px;
+    height: 278px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 157px;
+    left: 466px;
+}
+.station-d-position{
+    width: 233px;
+    height: 278px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 157px;
+    left: 233px;
+}
+.station-e-position{
+    width: 233px;
+    height: 278px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 157px;
+    left: 0px;
+}
+.betting-area-C{
+    position: absolute;
+    z-index: 100;
+    bottom: 0px;
+}
+#betting-area-C-char{
+    width: 53px;
+    height: 61px;
+    position: absolute;
+    z-index: 110;
+}
+.black-white-pic{
+    width: 53px;
+    height: 61px;
+    position: absolute;
+    z-index: 120;
+    left: 10px;
+    bottom: 8px;
+}
+.upBet{
+    width: 69px;
+    height: 34px;
+    position: absolute;
+    background-color: white;
+    opacity: 0.01;
+    z-index: 120;
+    bottom: 38px;
+    right: 18px;
+}
+.downBet{
+    width: 69px;
+    height: 34px;
+    position: absolute;
+    background-color: white;
+    opacity: 0.01;
+    z-index: 120;
+    bottom: 4px;
+    right: 18px;
+}
+.upBet:hover{
+   opacity: 0.15;
+}
+.downBet:hover{
+   opacity: 0.15;
+}
+.betText{
+    padding-top: 12px;
+    padding-left: 4px;
+    position: absolute;
+    width: 60px;
+    height: 32px;
+    z-index: 120;
+    bottom: 38px;
+    left: 70px;
+    color: white;
+    font-size: 25px;
+}
+.bankText{
+    padding-top: 12px;
+    padding-left: 4px;
+    position: absolute;
+    width: 60px;
+    height: 32px;
+    z-index: 120;
+    bottom: 6px;
+    left: 70px;
+    color: green;
+    font-size: 15px;
+}
+/* ========== ========== Game Setting Display CSS ========== ========== */
+#newGame{
+    width: 110px;
+    height: 145px;
+    position: absolute;
+    bottom: 0px;
+    left: 25px;
+    opacity: 0.0;
+    background-color: white;
+}
+#playGame{
+    width: 110px;
+    height: 145px;
+    position: absolute;
+    bottom: 0px;
+    left: 135px;
+    opacity: 0.0;
+    background-color: white;
+}
+#newGame:hover{
+   opacity: 0.05;
+}
+#playGame:hover{
+   opacity: 0.05;
+}
+#dealerBox{
+    width: 215px;
+    height: 160px;
+    position: absolute;
+    right: 40px;
+    top: 45px;
+}
+#hiddenCard{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+}
+#showCard-1{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    z-index: 10;
+}
+#showCard-2{
+    position: absolute;
+    top: 30px;
+    right: 15px;
+    z-index: 20;
+}
+#showCard-3{
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    z-index: 30;
+}
+#showCard-4{
+    position: absolute;
+    top: 70px;
+    right: 5px;
+    z-index: 40;
+}
+#showCard-5{
+    position: absolute;
+    top: 90px;
+    right: 0px;
+    z-index: 50;
+}
+/* ========== ========== Player Control Display CSS ========== ========== */
+#hit{
+    width: 100px;
+    height: 145px;
+    position: absolute;
+    bottom: 0px;
+    left: 528px;
+    background-color: yellow;
+    opacity: 0.0;    
+}
+#hit:hover{
+   opacity: 0.05;
+}
+#stand{
+    width: 118px;
+    height: 145px;
+    position: absolute;
+    bottom: 0px;
+    left: 628px;
+    background-color: yellow;
+    opacity: 0.0;
+}
+#stand:hover{
+   opacity: 0.05;
+}
+#double{
+    width: 120px;
+    height: 145px;
+    position: absolute;
+    bottom: 0px;
+    left: 748px;
+    background-color: yellow;
+    opacity: 0.0;
+}
+#double:hover{
+   opacity: 0.05;
+}
+.spilt-control{
+    width: 250px;
+    height: 145px;
+    position: absolute;
+    right: 40px;
+    bottom: 0px;
+    background-image: url('../img/splitControls.png')
+}
+/* ========== ========== Game Results Display CSS ========== ========== */
+.result-display{
+    width: 150px;
+    height: 157px;
+    position: absolute;
+    top: 25px;
+    left: 40px;
+    z-index: 200;
+    opacity: 1.0;
+}
+.player-pic{
+    width: 74px;
+    height: 84px;
+    position: absolute;
+    bottom: 51px;
+    left: 283px;
+    z-index: 200;
+}
+.playerBoard{
+    width: 0px;
+    height: 675px;
+}
