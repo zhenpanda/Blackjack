@@ -2,6 +2,8 @@
 
 ## Overview of `blackjack.js`
 
+Play@: http://zhenpanda.github.io/Blackjack/
+
 ![](http://upload.wikimedia.org/wikipedia/commons/4/4b/Blackjack_board.JPG)
 
 ### The game
