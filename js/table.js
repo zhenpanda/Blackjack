@@ -1,5 +1,6 @@
 //window.onload generate buttons 
 $(function() {
+	console.log("js loaded.")
     alert( "Weclome to the Sierra Madre Casino.\nClick [NEW] Button to setup new game.\nClick [Play] to start game.\n\nGood game! Have Fun!" );
 	//starts the game create: deck/players/dealer
 /*	blackjack.makeGame();*/
